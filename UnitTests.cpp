@@ -39,7 +39,7 @@ namespace UNIT_TESTS {
 		assert(fraction3.isValid() == true);
 		assert(fraction3.getTop() == 45 && fraction3.getBottom() == 32);
 		Fraction fraction4(6, 2);
-		assert(fraction4.getTop() == 3, fraction4.getBottom() == 1);
+		assert(fraction4.getTop() == 3 && fraction4.getBottom() == 1);
 		assert(fraction4.isValid() == true);
 		
 		// Test Fraction::isValid()
@@ -72,5 +72,17 @@ namespace UNIT_TESTS {
 		assert(Fraction::lcm(-15, -3) == -15);
 		assert(Fraction::lcm(-1, -1) == -1);
 		assert(Fraction::lcm(25, 10) == 50);
+
+		// Fraction Operator +
+		Fraction fraction11 = fraction1 + fraction2;
+		assert(fraction11.getTop() == 1 && fraction11.getBottom() == 1);
+		Fraction fraction12 = fraction4 + fraction7;
+		assert(fraction12.getTop() == 3 && fraction12.getBottom() == 1);
+		Fraction fraction13 = Fraction(-3, 9) + Fraction(1, -3);
+		assert(fraction13.getTop() == -2 && fraction13.getBottom() == 3);
+		Fraction fraction14 = Fraction(-3, 5) + Fraction(1, 15);
+		assert(fraction14.getTop() == -8 && fraction14.getBottom() == 15);
+		Fraction fraction15 = Fraction(2, -5) + Fraction(-1, 15);
+		assert(fraction15.getTop() == -7 && fraction15.getBottom() == 15);
 	}
 }
