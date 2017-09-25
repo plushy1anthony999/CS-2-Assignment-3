@@ -7,13 +7,13 @@ Fraction::Fraction(long Top, long Bottom) : Top(Top), Bottom(Bottom) {
 	else {
 		valid = true;
 		normalize();
-
 	}
 }
 
 // Operator Overload Friend Functions for Fraction Class
 //const Fraction operator + (const Fraction & num1, const Fraction & num2) {
-//	
+//
+//
 //}
 //const Fraction operator - (const Fraction & num1, const Fraction & num2) {
 //
@@ -105,4 +105,55 @@ long Fraction::gcd(long a, long b) {
 		tempA = tempB;
 		tempB = remainder;
 	}
+}
+long Fraction::lcm(long a, long b) {
+	if (a < 0 && b > 0) // If one num is pos and the other is neg, there's no lcm
+		return -1;
+	if (a > 0 && b < 0)
+		return -1;
+
+	bool negativeResult = false;
+	if (a < 0) { // Both numbers must be positive
+		a = abs(a);
+		negativeResult = true;
+	}
+	if (b < 0) {
+		b = abs(b);
+		negativeResult = true;
+	}
+
+	if (a == b) {
+		if (negativeResult) {
+			return -a;
+		}
+		else
+			return a; // return b is also valid
+	}
+
+	if (a == 0 || b == 0) 
+		return -1;
+
+	long originalA = a;
+	long originalB = b;
+	long incrementer = originalB;
+	while (a != b) {
+		if (a < b) { // Swap a and b to make sure a is the bigger num
+			long temp = a;
+			a = b;
+			b = temp;
+
+			if (incrementer == originalB)
+				incrementer = originalA;
+			else if (incrementer == originalA)
+				incrementer = originalB;
+		}	
+
+
+		b += incrementer;
+	}
+	if (negativeResult) {
+		return -a;
+	}
+	else 
+		return a; // return b is also valid
 }

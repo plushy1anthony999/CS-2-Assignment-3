@@ -31,5 +31,8 @@ public:
 	// Finds the greatest common divisor of two longs(treats both longs as positive)
 	// Returns -1 if given 0 and 0
 	long gcd(long a, long b);
+	// Finds the least common multiple
+	// Returns -1 if either value is 0
+	static long lcm(long a, long b);
 };
 

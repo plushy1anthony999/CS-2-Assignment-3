@@ -57,5 +57,20 @@ namespace UNIT_TESTS {
 		assert(fraction9.getTop() == 5 && fraction9.getBottom() == 1);
 		Fraction fraction10(3, -9);
 		assert(fraction10.getTop() == -1 && fraction10.getBottom() == 3);
+
+		// Test Fraction::lcm()
+		assert(Fraction::lcm(10, 10) == 10);
+		assert(Fraction::lcm(0, 10) == -1);
+		assert(Fraction::lcm(0, 0) == 0);
+		assert(Fraction::lcm(10, 3) == 30);
+		assert(Fraction::lcm(-10, 3) == -1);
+		assert(Fraction::lcm(10, -3) == -1);
+		assert(Fraction::lcm(-10, -3) == -30);
+		assert(Fraction::lcm(3, 10) == 30);
+		assert(Fraction::lcm(2, 3) == 6);
+		assert(Fraction::lcm(99, -3) == -1);
+		assert(Fraction::lcm(-15, -3) == -15);
+		assert(Fraction::lcm(-1, -1) == -1);
+		assert(Fraction::lcm(25, 10) == 50);
 	}
 }
