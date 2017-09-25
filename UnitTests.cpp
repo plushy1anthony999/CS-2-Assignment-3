@@ -30,7 +30,7 @@ namespace UNIT_TESTS {
 		assert(fraction1.gcd(-11, 7) == 1);
 
 		// Test Fraction Constructor and normalize() and gcd()
-		Fraction fraction2(-1, -2); // 1/3
+		Fraction fraction2(-1, -2); // 1/2
 		assert(fraction1.getTop() == 1);
 		assert(fraction1.getBottom() == 2);
 
@@ -84,5 +84,17 @@ namespace UNIT_TESTS {
 		assert(fraction14.getTop() == -8 && fraction14.getBottom() == 15);
 		Fraction fraction15 = Fraction(2, -5) + Fraction(-1, 15);
 		assert(fraction15.getTop() == -7 && fraction15.getBottom() == 15);
+
+		// Fraction Operator -
+		Fraction fraction16 = fraction1 - fraction2;
+		assert(fraction16.getTop() == 0 && fraction16.getBottom() == 1);
+		Fraction fraction17 = fraction1 - fraction8;
+		assert(fraction17.getTop() == -5 && fraction17.getBottom() == 2);
+		Fraction fraction18 = fraction8 - fraction9;
+		assert(fraction18.getTop() == -2 && fraction18.getBottom() == 1);
+		Fraction fraction19 = fraction9 - fraction10;
+		assert(fraction19.getTop() == 16 && fraction19.getBottom() == 3);
+		Fraction fraction20 = Fraction(-2, 9) - Fraction(3, -4);
+		assert(fraction20.getTop() == 19 && fraction20.getBottom() == 36);
 	}
 }

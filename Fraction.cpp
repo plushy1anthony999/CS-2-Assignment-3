@@ -25,9 +25,20 @@ const Fraction operator + (const Fraction & num1, const Fraction & num2) {
 		newNum1Bottom
 	);
 }
-//const Fraction operator - (const Fraction & num1, const Fraction & num2) {
-//
-//}
+const Fraction operator - (const Fraction & num1, const Fraction & num2) {
+	long lcm = Fraction::lcm(num1.Bottom, num2.Bottom);
+	long num1Multiplier = lcm / num1.Bottom;
+	long num2Multiplier = lcm / num2.Bottom;
+
+	long newNum1Bottom = num1Multiplier * num1.Bottom;
+	long newNum1Top = num1Multiplier * num1.Top;
+	long newNum2Top = num2Multiplier * num2.Top;
+
+	return Fraction(
+		newNum1Top - newNum2Top,
+		newNum1Bottom
+	);
+}
 //const Fraction operator * (const Fraction & num1, const Fraction & num2) {
 //
 //}
