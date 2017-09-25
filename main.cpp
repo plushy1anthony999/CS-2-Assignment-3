@@ -1,4 +1,5 @@
-#include "UnitTests.cpp"
+#include "Fraction.h"
+#include "UnitTests.h"
 
 using namespace UNIT_TESTS;
 const bool UNIT_TESTING = true;
