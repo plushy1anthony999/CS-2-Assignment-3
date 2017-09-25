@@ -96,5 +96,9 @@ namespace UNIT_TESTS {
 		assert(fraction19.getTop() == 16 && fraction19.getBottom() == 3);
 		Fraction fraction20 = Fraction(-2, 9) - Fraction(3, -4);
 		assert(fraction20.getTop() == 19 && fraction20.getBottom() == 36);
+
+		// Fraction Operator *
+		Fraction fraction21 = fraction1 * fraction2;
+		assert(fraction21.getTop() == 1 && fraction21.getBottom() == 4);
 	}
 }
