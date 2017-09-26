@@ -135,6 +135,22 @@ namespace UNIT_TESTS {
 		Fraction fraction28 = fraction10 / fraction9;
 		assert(fraction28.getTop() == -1 && fraction28.getBottom() == 15);
 
+		// Fraction Operator ++
+		assert(++fraction1 == Fraction(3, 2));
+		assert(++fraction2 == Fraction(3, 2));
+		assert(++fraction4 == Fraction(4, 1));
+		assert(++fraction7 == Fraction(1, 1));
+		assert(++fraction8 == Fraction(4, 1));
+		assert(++fraction9 == Fraction(6, 1));
+
+		// Fraction Operator --
+		assert(--fraction1 == Fraction(-1, 2));
+		assert(--fraction2 == Fraction(-1, 2));
+		assert(--fraction4 == Fraction(2, 1));
+		assert(--fraction7 == Fraction(-1, 1));
+		assert(--fraction8 == Fraction(2, 1));
+		assert(--fraction9 == Fraction(4, 1));
+
 		// Fraction Operator ==
 		assert(fraction1 == fraction2);
 		Fraction fraction29(3, 1);

@@ -50,6 +50,12 @@ const Fraction operator / (const Fraction & num1, const Fraction & num2) {
 		num1.getBottom() * num2.getTop()
 	);
 }
+Fraction Fraction::operator ++ () {
+	return (*this + 1);
+}
+Fraction Fraction::operator -- () {
+	return (*this - 1);
+}
 bool operator == (const Fraction & num1, const Fraction & num2) {
 	if (
 		num1.getTop() == num2.getTop() &&
@@ -76,13 +82,6 @@ std::istream & operator >> (std::istream & input, Fraction & num) {
 	Fraction::getInstance(input, num);
 	return input;
 }
-
-//Fraction Fraction::operator ++ () {
-//
-//}
-//Fraction Fraction::operator-- () {
-//
-//}
 
 long Fraction::getTop() const {
 	return Top;
