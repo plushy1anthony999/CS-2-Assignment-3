@@ -7,7 +7,7 @@ namespace UNIT_TESTS {
 		cout << "Starting Unit Tests..." << endl << endl;
 		testFractionClass();
 
-		cout << "All tests passed" << endl;
+		cout << "All tests passed" << endl << endl;
 	}
 
 	void testFractionClass() {	
@@ -36,20 +36,38 @@ namespace UNIT_TESTS {
 
 		assert(fraction2.getTop() == 1 && fraction2.getBottom() == 2);
 		Fraction fraction3(270, 192);
-		assert(fraction3.isValid() == true);
 		assert(fraction3.getTop() == 45 && fraction3.getBottom() == 32);
 		Fraction fraction4(6, 2);
 		assert(fraction4.getTop() == 3 && fraction4.getBottom() == 1);
-		assert(fraction4.isValid() == true);
 		
-		// Test Fraction::isValid()
-		Fraction fraction5(-1, 0);
-		assert(fraction5.isValid() == false);
-		Fraction fraction6(0, 0);
-		assert(fraction6.isValid() == false);
-		Fraction fraction7(0, 1);
-		assert(fraction7.isValid() == true);
+		// Test if Fraction handle divide by zero
+		unsigned int errorCount = 0;
+		Fraction fraction5;
+		try {
+			fraction5 = Fraction(-1, 0);
+		}
+		catch (const char * error) {
+			errorCount++;
+			cout << error << endl;
+		}
+		Fraction fraction6;
+		try {
+			fraction6 = Fraction(0, 0);
+		}
+		catch (const char * error) {
+			errorCount++;
+			cout << error << endl;
+		}
+		Fraction fraction7;
+		try {
+			fraction7 = Fraction(0, 1);
+		}
+		catch (const char * error) {
+			errorCount++;
+			cout << error << endl;
+		}
 		assert(fraction7.getTop() == 0 && fraction7.getBottom() == 1);
+		assert(errorCount == 2);
 
 		Fraction fraction8(9, 3);
 		assert(fraction8.getTop() == 3 && fraction8.getBottom() == 1);
@@ -100,5 +118,96 @@ namespace UNIT_TESTS {
 		// Fraction Operator *
 		Fraction fraction21 = fraction1 * fraction2;
 		assert(fraction21.getTop() == 1 && fraction21.getBottom() == 4);
+		Fraction fraction22 = fraction9 * fraction10;
+		assert(fraction22.getTop() == -5 && fraction22.getBottom() == 3);
+		Fraction fraction23 = fraction9 * fraction1;
+		assert(fraction23.getTop() == 5 && fraction23.getBottom() == 2);
+		Fraction fraction24 = fraction10 * fraction1;
+		assert(fraction24.getTop() == -1 && fraction24.getBottom() == 6);
+
+		// Fraction Operator /
+		Fraction fraction25 = fraction1 / fraction2;
+		assert(fraction25.getTop() == 1 && fraction25.getBottom() == 1);
+		Fraction fraction26 = fraction1 / fraction10;
+		assert(fraction26.getTop() == -3 && fraction26.getBottom() == 2);
+		Fraction fraction27 = fraction9 / fraction10;
+		assert(fraction27.getTop() == -15 && fraction27.getBottom() == 1);
+		Fraction fraction28 = fraction10 / fraction9;
+		assert(fraction28.getTop() == -1 && fraction28.getBottom() == 15);
+
+		// Fraction Operator ==
+		assert(fraction1 == fraction2);
+		Fraction fraction29(3, 1);
+		assert(fraction29 == fraction8);
+		Fraction fraction30(-1, 3);
+		assert(fraction10 == fraction30);
+		Fraction fraction31(0, 21);
+		assert(fraction7 == fraction31);
+
+		// Fraction Operator !=
+		assert((fraction1 != fraction2) == false);
+		assert((fraction29 != fraction8) == false);
+		assert((fraction10 != fraction30) == false);
+		assert((fraction7 != fraction31) == false);
+
+		// Fraction Operator <<
+		cout << fraction1.toDouble() << endl
+			 << fraction2.toDouble() << endl
+			 << fraction3.toDouble() << endl
+			 << fraction4.toDouble() << endl
+			 << fraction7.toDouble() << endl
+			 << fraction8.toDouble() << endl
+			 << fraction9.toDouble() << endl;
+
+		// Fraction Operator >>
+		array<Fraction, 6> fractions;
+		ifstream infile("FractionTest-1.txt");
+		if (infile.is_open()) {
+			for (size_t i = 0; !infile.eof() && i < 6; i++) {
+				Fraction fraction;
+				infile >> fractions[i];
+			}
+		}
+		assert(fractions[0].getTop() == 2 && fractions[0].getBottom() == 3);
+		assert(fractions[1].getTop() == 4 && fractions[1].getBottom() == 5);
+		assert(fractions[2].getTop() == 11 && fractions[2].getBottom() == 1);
+		assert(fractions[3].getTop() == 3 && fractions[3].getBottom() == 1);
+		assert(fractions[4].getTop() == 4 && fractions[4].getBottom() == 67);
+		assert(fractions[5].getTop() == 1 && fractions[5].getBottom() == 1);
+
+		// Test toString()		
+		assert(fraction1.toString() == "1/2");
+		assert(fraction2.toString() == "1/2");
+		assert(fraction3.toString() == "45/32");
+		assert(fraction4.toString() == "3/1");
+		assert(fraction7.toString() == "0/1");
+		assert(fraction10.toString() == "-1/3");
+		Fraction fraction32(2, -14);
+		assert(fraction32.toString() == "-1/7");
+		Fraction fraction33(0, -12);		
+		assert(fraction33.toString() == "0/1");
+		Fraction fraction34(-2, -6);
+		assert(fraction34.toString() == "1/3");
+		Fraction fraction35(-5);
+		assert(fraction35.toString() == "-5/1");
+		assert((Fraction(1, 3) + Fraction(2, 3)).toString() == "1/1");
+		assert((Fraction(2, 4) + Fraction(1, -2)).toString() == "0/1");
+
+		// Test toDouble()		
+		assert(fraction1.toDouble() == 0.5);
+		assert(fraction2.toDouble() == 0.5);
+		assert(fraction3.toDouble() == 1.40625);
+		assert(fraction4.toDouble() == 3);
+		assert(fraction7.toDouble() == 0);
+		assert(fraction33.toDouble() == 0);
+		assert(fraction8.toDouble() == 3);
+		assert(fraction9.toDouble() == 5);
+		assert((Fraction(1, 4) + Fraction(4, -16)).toDouble() == 0);
+		assert((Fraction(1, 2) / Fraction(1, 3)).toDouble() == 1.5);
+		Fraction F2(6, -12);	
+		Fraction F3(-9, 12);
+		assert((2 + F2).toDouble() == 1.5);
+		assert((2 - F2).toDouble() == 2.5);
+
 	}
 }

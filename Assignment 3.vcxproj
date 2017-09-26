@@ -121,12 +121,14 @@
     <ClCompile Include="FractionList.cpp" />
     <ClCompile Include="HelperFunctions.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SystemTests.cpp" />
     <ClCompile Include="UnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Fraction.h" />
     <ClInclude Include="FractionList.h" />
     <ClInclude Include="HelperFunctions.h" />
+    <ClInclude Include="SystemTests.h" />
     <ClInclude Include="UnitTests.h" />
   </ItemGroup>
   <ItemGroup>

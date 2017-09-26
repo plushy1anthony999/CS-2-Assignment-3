@@ -1,11 +1,12 @@
 #include "Fraction.h"
 #include "UnitTests.h"
+#include "SystemTests.h"
 
-using namespace UNIT_TESTS;
 const bool UNIT_TESTING = true;
+const bool SYSTEM_TESTING = true;
 
 int main() {
-	if (UNIT_TESTING) doUnitTesting();
-
+	if (UNIT_TESTING) UNIT_TESTS::doUnitTesting();
+	if (SYSTEM_TESTING) SYSTEM_TESTS::doSystemTesting();
 }
 
