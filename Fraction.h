@@ -16,8 +16,11 @@ public:
 	friend const Fraction operator - (const Fraction & num1, const Fraction & num2);
 	friend const Fraction operator * (const Fraction & num1, const Fraction & num2);
 	friend const Fraction operator / (const Fraction & num1, const Fraction & num2);
-	Fraction operator ++ (); // Pre-increments the fraction
-	Fraction operator -- (); // Pre-decrements the fraction
+	const Fraction operator ++ (); // Pre-increments the fraction
+	const Fraction operator -- (); // Pre-decrements the fraction
+	const Fraction operator ++ (int marker); // Post-increments the fraction
+	const Fraction operator -- (int marker); // Post-decrements the fraction
+	const Fraction operator - (); 
 	friend bool operator == (const Fraction & num1, const Fraction & num2); // Will return false if either fraction is invalid
 	friend bool operator != (const Fraction & num1, const Fraction & num2);
 	friend std::ostream & operator << (std::ostream & output, const Fraction & num); // Prints to stdout or file

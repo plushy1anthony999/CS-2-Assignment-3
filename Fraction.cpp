@@ -50,11 +50,29 @@ const Fraction operator / (const Fraction & num1, const Fraction & num2) {
 		num1.getBottom() * num2.getTop()
 	);
 }
-Fraction Fraction::operator ++ () {
+const Fraction Fraction::operator ++ () {
 	return (*this + 1);
 }
-Fraction Fraction::operator -- () {
+const Fraction Fraction::operator -- () {
 	return (*this - 1);
+}
+const Fraction Fraction::operator ++ (int marker) {
+	long originalTop = Top;
+	long originalBottom = Bottom;
+	Top += Bottom;
+	normalize();
+	return Fraction(originalTop, originalBottom); // returns value before increment
+}
+const Fraction Fraction::operator -- (int marker) {
+	long originalTop = Top;
+	long originalBottom = Bottom;
+	Top -= Bottom;
+	normalize();
+	return Fraction(originalTop, originalBottom); // returns value before decrement
+}
+const Fraction Fraction::operator - () {
+	Top = (-Top);
+	return *this;
 }
 bool operator == (const Fraction & num1, const Fraction & num2) {
 	if (
@@ -98,12 +116,12 @@ void Fraction::getInstance(istream & in, Fraction & newFraction) {
 				long denominator;
 				cout << "Enter the fraction's numerator: ";
 				in >> numerator;
-				cout << endl;
 				cout << "Enter the fraction's denominator: ";
 				in >> denominator;
 				cout << endl;
 
 				newFraction = Fraction(numerator, denominator);
+				return;
 			}
 			catch (const char * error) {
 				cout << error << endl;			
@@ -149,8 +167,8 @@ long Fraction::gcd(long a, long b) {
 	if (b < 0)
 		b = abs(b);
 
-	if (a == 0 && b == 0) // At least one non-zero value is needed
-		return -1;
+	if (a == 0 && b == 0) 
+		return 0;
 
 	if (a == b) {
 		return a; // return b is also valid

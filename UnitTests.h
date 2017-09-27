@@ -7,4 +7,5 @@
 namespace UNIT_TESTS {
 	void doUnitTesting();
 	void testFractionClass();
+	void testFractionListClass();
 }
