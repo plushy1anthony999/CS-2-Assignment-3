@@ -1,11 +1,13 @@
 #pragma once
+#include "Fraction.h"
+#include "FractionList.h"
 #include <assert.h>
 #include <iostream>
 #include <fstream>
-#include "Fraction.h"
 
 namespace SYSTEM_TESTS {
 	void doSystemTesting();
 	void testFractionClass();
+	void testFractionListClass();
 }
 

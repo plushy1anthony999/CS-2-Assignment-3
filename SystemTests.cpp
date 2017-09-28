@@ -6,9 +6,9 @@ namespace SYSTEM_TESTS {
 	void doSystemTesting() {
 		cout << "Starting System Tests..." << endl << endl;
 		testFractionClass();
+		testFractionListClass();
 
-		cout << "All tests passed" << endl;
-
+		cout << "System Tests passed" << endl;
 	}
 
 	void testFractionClass() {
@@ -44,6 +44,21 @@ namespace SYSTEM_TESTS {
 			cout << "Writing to file the fraction " << fraction4 << endl;
 			out << fraction4;
 			out.close();
+		}
+	}
+	void testFractionListClass() {
+		{	// FractionList::getInstance() and << operator	
+			FractionList fractionList;
+			cout << "Input the fractions: 1/2, -2/3, -4/5, -6/12, 0/-1, 2/4" << endl;
+			FractionList::getInstance(fractionList);
+			assert(fractionList.getSortState() == false);
+			assert(fractionList.isEmpty() == false);
+			assert(fractionList.isFull() == false);
+			assert(fractionList.getNumberOfElements() == 6);
+			assert(fractionList.toString() == "1/2\n-2/3\n-4/5\n-1/2\n0/1\n1/2\n");
+			cout << fractionList;
+
+
 		}
 	}
 }

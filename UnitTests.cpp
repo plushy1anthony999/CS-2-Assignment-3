@@ -9,10 +9,12 @@ namespace UNIT_TESTS {
 		testFractionClass();
 		testFractionListClass();
 
-		cout << "All tests passed" << endl << endl;
+		cout << "Unit Tests passed" << endl << endl;
 	}
 
-	void testFractionClass() {	
+	void testFractionClass() {
+		cout << "Testing Fraction Class... " << endl;
+
 		// Test Fraction::gcd()
 		Fraction fraction1(1, 2);
 		assert(fraction1.gcd(4, 8) == 4);
@@ -176,7 +178,7 @@ namespace UNIT_TESTS {
 		assert((fraction10 != fraction30) == false);
 		assert((fraction7 != fraction31) == false);
 
-		// Fraction Operator <<
+		// Fraction Operator << with cout
 		cout << fraction1.toDouble() << endl
 			 << fraction2.toDouble() << endl
 			 << fraction3.toDouble() << endl
@@ -184,22 +186,47 @@ namespace UNIT_TESTS {
 			 << fraction7.toDouble() << endl
 			 << fraction8.toDouble() << endl
 			 << fraction9.toDouble() << endl;
+		
+		{	// Fraction Operator << with output-file
+			ofstream outfile("fraction-outfile-test.txt");
+			if (outfile.is_open()) {
+				outfile << Fraction(1, -3) << endl
+						<< Fraction(-3, 9) << endl
+						<< Fraction(-0, 8) << endl;
+			}
 
-		// Fraction Operator >>
+			ifstream infile2("fraction-outfile-test.txt"); // see if outfile with << worked
+			string fractionString1;
+			string fractionString2;
+			string fractionString3;
+			if (infile2.is_open()) 
+				infile2 >> fractionString1 >> fractionString2 >> fractionString3;
+		
+			assert(Fraction(-1, 3).toString() == fractionString1);
+			assert(Fraction(-3, 9).toString() == fractionString2);
+			assert(Fraction(-0, 8).toString() == fractionString3);
+		}
+
+
+		// Fraction Operator >> with input-file
 		array<Fraction, 6> fractions;
 		ifstream infile("FractionTest-1.txt");
-		if (infile.is_open()) {
-			for (size_t i = 0; !infile.eof() && i < 6; i++) {
-				Fraction fraction;
-				infile >> fractions[i];
-			}
-		}
+		if (infile.is_open()) 
+			for (size_t i = 0; !infile.eof() && i < 6; i++) 
+				infile >> fractions[i];			
+		
 		assert(fractions[0].getTop() == 2 && fractions[0].getBottom() == 3);
 		assert(fractions[1].getTop() == 4 && fractions[1].getBottom() == 5);
 		assert(fractions[2].getTop() == 11 && fractions[2].getBottom() == 1);
 		assert(fractions[3].getTop() == 3 && fractions[3].getBottom() == 1);
 		assert(fractions[4].getTop() == 4 && fractions[4].getBottom() == 67);
 		assert(fractions[5].getTop() == 1 && fractions[5].getBottom() == 1);
+		ofstream("emptyFile.txt");
+		ifstream emptyFile("emptyFile.txt");
+		Fraction emptyFraction;
+		emptyFile >> emptyFraction;
+		assert(emptyFraction.toString() == "0/1");
+
 
 		// Test toString()		
 		assert(fraction1.toString() == "1/2");
@@ -265,12 +292,72 @@ namespace UNIT_TESTS {
 		assert((-Fraction(12, 24)) == Fraction(-1, 2));
 		assert((-Fraction(0, -1)) == Fraction(0, 1));
 		assert((-Fraction(-3, -12)) == Fraction(-1, 4));
+
+		cout << endl;
 	}
 	void testFractionListClass() {
+		cout << "Testing FractionList Class... " << endl;
+
 		// FractionList Constructor, getSortState(), isEmpty(), isFull(), getNumberOfElements()
 		assert(FractionList().getSortState() == false);
 		assert(FractionList().isEmpty() == true);
 		assert(FractionList().isFull() == false);
 		assert(FractionList().getNumberOfElements() == 0);
+
+		{	// FractionList addFraction()
+			FractionList fractionList;
+			for (size_t i = 0; i < 30; i++) {
+				assert(fractionList.isFull() == false);
+				fractionList.addFraction(Fraction(i)); // Adds 0/1, 1/1, 2/1 ... till full
+				assert(fractionList.getNumberOfElements() == i + 1);
+				assert(fractionList.isEmpty() == false);
+				assert(fractionList.getSortState() == false);
+			}
+			assert(fractionList.getNumberOfElements() == 30);
+			assert(fractionList.isFull() == true);
+			assert(fractionList.getSortState() == false);
+
+			fractionList.addFraction(Fraction(1, 1)); // Make sure invariant is obeyed
+			assert(fractionList.getNumberOfElements() == 30);
+			assert(fractionList.isFull() == true);
+			assert(fractionList.getSortState() == false);
+		}
+
+		{	// FractionList toString()
+			FractionList fractionList;
+			assert(fractionList.isEmpty() == true);
+			fractionList.addFraction(Fraction(1, 2));
+			fractionList.addFraction(Fraction(-2, 2));
+			fractionList.addFraction(Fraction(0, 2));
+			assert(fractionList.toString() == "1/2\n-1/1\n0/1\n");
+			assert(fractionList.getNumberOfElements() == 3);
+			assert(fractionList.getSortState() == false);
+			assert(fractionList.isEmpty() == false);
+			assert(fractionList.isFull() == false);
+			fractionList.addFraction(Fraction(-4, -6));
+			assert(fractionList.toString() == "1/2\n-1/1\n0/1\n2/3\n");
+			assert(fractionList.getNumberOfElements() == 4);
+			assert(fractionList.getSortState() == false);
+			assert(fractionList.isEmpty() == false);
+			assert(fractionList.isFull() == false);
+		}
+
+		{	// Test << Operator with outputting to a file
+			// Test >> Operator with reading from a file
+		
+			cout << "Write nothing to file \"empty - test - outputfile.txt\"" << endl;
+			ofstream emptyOutFile("empty-test-outputfile.txt");
+			emptyOutFile << FractionList();
+			emptyOutFile.close();
+
+			cout << "Reading from file \"empty - test - outputfile.txt\"" << endl;
+			FractionList fractionList;
+			ifstream inputFile("empty-test-outputfile.txt");
+			inputFile >> fractionList;
+			assert(fractionList.isEmpty() == true);
+			assert(fractionList.getNumberOfElements() == 0);
+		}
+
+		cout << endl;
 	}
 }

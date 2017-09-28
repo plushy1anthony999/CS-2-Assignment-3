@@ -129,10 +129,19 @@ void Fraction::getInstance(istream & in, Fraction & newFraction) {
 		}
 	}
 	else {
-		long numerator;
-		long denominator;
-		in >> numerator >> denominator;
-		newFraction = Fraction(numerator, denominator);
+		if (((ifstream &)in).is_open()) {
+			if (in.peek() != ifstream::traits_type::eof()) { // Make sure file isn't empty
+				try {
+					long numerator = 0; // Same as Fraction() default arguments
+					long denominator = 1;
+					in >> numerator >> denominator;
+					newFraction = Fraction(numerator, denominator);			
+				}
+				catch (const char * error) {
+					cout << error << endl;
+				}
+			}
+		}
 	}
 }
 
